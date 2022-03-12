@@ -1,0 +1,90 @@
+{% load static %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="UTF-8">
+    <title>Times Page</title>
+</head>
+<body>
+
+<nav id="sidebar">
+
+</nav>
+
+<form action="{% url 'addTime' %}" method="get">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
+<br>
+
+
+<table class="table table-striped" style="width: auto">
+    <thead>
+    <tr>
+        <td> Session ID </td>
+        <td> Session Notes </td>
+        <td> Session Start </td>
+        <td> Session End </td>
+        <td> Cube Used </td>
+        <td> Event Type </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for sess in sessions %}
+        <tr>
+            <td> {{ sess.id }} </td>
+            <td> {{ sess.notes }} </td>
+            <td> {{ sess.startDateTime }} </td>
+            <td> {{ sess.endDateTime }} </td>
+            <td> {{ sess.cubeUsed.name }} </td>
+            <td> {{ sess.eventType.name }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+<br>
+
+<table class="table table-striped" style="width: 50%">
+    <thead>
+    <tr>
+        <td> Attempt ID </td>
+        <td> Time (Seconds) </td>
+        <td> Attempt Notes </td>
+        <td> Event Type </td>
+        <td> Cube Used </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for attempt in attempts %}
+        <tr>
+            <td> {{ attempt.id }} </td>
+            <td> {{ attempt.time|div:100 }}</td>
+            <td> {{ attempt.notes }} </td>
+            <td> {{ attempt.session.eventType.name }} </td>
+            <td> {{ attempt.session.cubeUsed.name }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+<br>
+
+<br>
+
+<form action="{% url 'addFileOfTimes' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="session_times">
+    <input type="submit">
+</form>
+
+</body>
+</html>

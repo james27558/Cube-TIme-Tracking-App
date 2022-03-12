@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load mathfilters %}
+{% load times_tags %}
+
+{% block content %}
+
+
+    {#                <td> {{ sess.startDateTime|date:'d/m/Y H:i' }} </td>#}
+    {#                <td> {{ sess.endDateTime|date:'d/m/Y H:i' }} </td>#}
+
+
+
+    <table class="table table-striped" style="width: auto">
+        <thead>
+        <tr>
+            <td> Attempt ID</td>
+            <td> Time (s)</td>
+            <td> Notes</td>
+            <td> Tags</td>
+            <td> Event Type</td>
+            <td> Cube Used</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for attempt in attemptsList %}
+            <tr>
+                <td> {{ attempt.id }} </td>
+                <td> {{ attempt.time|div:100 }}</td> <!-- div:100 -->
+                <td> {{ attempt.notes }} </td>
+                <td> {{ attemptTagsDict|getTag:attempt.id }} </td>
+                <td> {{ attempt.session.eventType.name }} </td>
+                <td> {{ attempt.session.cubeUsed.name }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+
+    {% if attempts.has_other_pages %}
+        <ul class="pagination">
+            {% if attempts.has_previous %}
+                <li><a href="?page={{ attempts.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in attempts.paginator.page_range %}
+                {% if attempts.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if attempts.has_next %}
+                <li><a href="?page={{ attempts.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+{% endblock content %}
+
+

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-group">
+        <form action="{% url 'addTime' %}" method="get">
+            {% csrf_token %}
+            {{ attemptForm }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <form action="{% url 'addFileOfTimes' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ sessionForm }}
+        <input type="submit">
+    </form>
+
+    <form action="{% url 'addFileOfTimes' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ tagForm }}
+
+        <input type="submit">
+    </form>
+
+{% endblock %}

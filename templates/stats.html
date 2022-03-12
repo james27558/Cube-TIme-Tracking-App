@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block headContent %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block content %}
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script>
+  const labels = {{ chart.labels }};
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Times',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(0, 99, 132)',
+      data: {{ chart.data }},
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+
+
+
+ <script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+
+
+
+
+{% endblock %}

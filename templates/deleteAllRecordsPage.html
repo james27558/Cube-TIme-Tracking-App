@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block headContent %}
+
+{% endblock %}
+
+{% block content %}
+    <p> Are you sure you want to delete ALL records? </p>
+    <a href="{% url 'deleteAll' confirm=1 %}"> <button class="btn-danger"> DROP all database records </button> </a>
+{% endblock %}
